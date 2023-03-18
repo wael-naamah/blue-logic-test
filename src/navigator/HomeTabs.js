@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Account from '../screens/Account';
 import Cart from '../screens/Cart';
@@ -20,8 +20,8 @@ const HomeTabs = () => {
       tabBar={props => <TabBar {...props} />}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Tickets" component={Tickets} />
-      <Tab.Screen name="Favorite" component={Favorite} />
       <Tab.Screen name="Cart" component={Cart} />
+      <Tab.Screen name="Favorite" component={Favorite} />
       <Tab.Screen name="Account" component={Account} />
     </Tab.Navigator>
   );
