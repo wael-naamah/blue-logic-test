@@ -10,8 +10,11 @@ const Home = () => {
     <View style={styles.container}>
       <ScrollView
         style={styles.scroll}
-        contentContainerStyle={styles.contentStyle}>
+        contentContainerStyle={styles.contentStyle}
+        showsVerticalScrollIndicator={false}>
+        <View style={styles.divider} />
         <Login />
+        <View style={styles.divider} />
         <Main />
       </ScrollView>
     </View>
@@ -30,7 +33,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentStyle: {
-    flex: 1,
     backgroundColor: '#fff',
+  },
+  divider: {
+    height: 15 * theme.BW,
+    backgroundColor: '#fff',
+    zIndex: 3,
   },
 });

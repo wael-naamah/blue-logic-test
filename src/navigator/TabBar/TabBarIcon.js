@@ -1,7 +1,10 @@
-import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import React, {useContext} from 'react';
+import {Image, StyleSheet, Text, View} from 'react-native';
+import {CartContext} from '../../context/cartContext';
 
 const TabBarIcon = ({route}) => {
+  const {cart} = useContext(CartContext);
+
   if (route.name === 'Home') {
     return (
       <Image source={require('../../assets/home.png')} style={styles.tabIcon} />
@@ -22,7 +25,17 @@ const TabBarIcon = ({route}) => {
     );
   } else if (route.name === 'Cart') {
     return (
-      <Image source={require('../../assets/cart.png')} style={styles.tabIcon} />
+      <View>
+        {cart.length ? (
+          <View>
+            <Text>{cart.length}</Text>
+          </View>
+        ) : null}
+        <Image
+          source={require('../../assets/cart.png')}
+          style={styles.tabIcon}
+        />
+      </View>
     );
   } else {
     return (

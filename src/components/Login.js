@@ -110,7 +110,8 @@ const styles = StyleSheet.create({
     borderColor: '#d5d5d5',
     borderRadius: 25 * theme.BW,
     padding: 15 * theme.BW,
-    marginVertical: 10 * theme.BW,
+    zIndex: 4,
+    backgroundColor: '#fff',
   },
   title: {
     fontSize: 18,
