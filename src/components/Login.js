@@ -2,18 +2,38 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import TextInput from './TextInput';
 import Button from './Button';
-
 import theme from '../styles/theme.style';
+import Greeting from './Greeting';
+
+import {
+  isValidEamil,
+  isValidMobile,
+  isStrongPassword,
+  getStrongPasswordErrorMessage,
+  isSubmitDisabled,
+} from 'utils';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [mobile, setMobile] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleSubmit = () => {
-    console.log('Button pressed!');
+    setLoggedIn(true);
   };
+
+  const signOut = () => {
+    setEmail('');
+    setName('');
+    setPassword('');
+    setMobile('');
+    setLoggedIn(false);
+  };
+  if (loggedIn) {
+    return <Greeting name={name} signOut={() => signOut()} />;
+  }
 
   return (
     <View style={styles.content}>
@@ -23,6 +43,12 @@ const Login = () => {
         placeholder="Email"
         width={'100%'}
         value={email}
+        keyboardType="email-address"
+        errorMessage={
+          email && !isValidEamil(email)
+            ? 'Oh no! Please enter a valid email'
+            : ''
+        }
         onChangeText={value => setEmail(value)}
       />
 
@@ -35,7 +61,13 @@ const Login = () => {
       <TextInput
         placeholder="Password"
         width={'100%'}
+        secureTextEntry={true}
         value={password}
+        errorMessage={
+          password && !isStrongPassword(password)
+            ? getStrongPasswordErrorMessage(password)
+            : ''
+        }
         onChangeText={value => setPassword(value)}
       />
       <View style={styles.mobileInputs}>
@@ -48,11 +80,22 @@ const Login = () => {
           placeholder="Mobile"
           width={'80%'}
           value={mobile}
+          errorMessage={
+            mobile && !isValidMobile(mobile)
+              ? 'Oh no! Please enter a valid mobile (ex: 5xxxxxxxx)'
+              : ''
+          }
           onChangeText={value => setMobile(value)}
+          keyboardType="phone-pad"
         />
       </View>
 
-      <Button title="Submit" style={styles.btn} onPress={handleSubmit} />
+      <Button
+        title="Submit"
+        style={styles.btn}
+        disabled={isSubmitDisabled(email, mobile, name, password)}
+        onPress={handleSubmit}
+      />
     </View>
   );
 };
