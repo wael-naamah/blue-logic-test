@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import React from 'react';
 import withLinearGradient from '../hoc/withLinearGradient';
 import Login from '../components/Login';

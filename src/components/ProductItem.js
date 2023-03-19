@@ -1,14 +1,13 @@
 import {StyleSheet, Image, Text, View, TouchableOpacity} from 'react-native';
 import React, {useState, useContext} from 'react';
 import theme from '../styles/theme.style';
-import Button from './Button';
 
 import {CartContext} from '../context/cartContext';
 
-const ProductItem = ({item}) => {
-  const {addItemToCart} = useContext(CartContext);
+const ProductItem = ({item, cartItem}) => {
+  const {addItemToCart, removeItemFromCart} = useContext(CartContext);
 
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(cartItem ? item.quantity : 1);
 
   const addItem = () => {
     setQuantity(quantity + 1);
@@ -20,8 +19,12 @@ const ProductItem = ({item}) => {
     }
   };
 
-  const handleAddToCart = () => {
-    addItemToCart({...item, quantity});
+  const handleUpdateCart = () => {
+    if (cartItem) {
+      removeItemFromCart(item);
+    } else {
+      addItemToCart({...item, quantity});
+    }
   };
 
   return (
@@ -40,11 +43,12 @@ const ProductItem = ({item}) => {
             <Image source={require('../assets/home/plus.png')} />
           </TouchableOpacity>
         </View>
-        <Button
-          title={'Add to Cart'}
-          onPress={handleAddToCart}
-          style={{marginTop: 10}}
-        />
+
+        <TouchableOpacity onPress={handleUpdateCart}>
+          <Text style={styles.addItem}>
+            {cartItem ? 'Remove from Cart' : 'Add to Cart'}
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -79,5 +83,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
+  },
+  addItem: {
+    textAlign: 'center',
+    marginVertical: 10 * theme.BW,
+    fontSize: 11,
+    textDecorationLine: 'underline',
   },
 });

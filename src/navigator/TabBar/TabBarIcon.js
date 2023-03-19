@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {CartContext} from '../../context/cartContext';
+import theme from '../../styles/theme.style';
 
 const TabBarIcon = ({route}) => {
   const {cart} = useContext(CartContext);
@@ -27,8 +28,8 @@ const TabBarIcon = ({route}) => {
     return (
       <View>
         {cart.length ? (
-          <View>
-            <Text>{cart.length}</Text>
+          <View style={styles.cartQtyContainer}>
+            <Text style={styles.cartQty}>{cart.length}</Text>
           </View>
         ) : null}
         <Image
@@ -51,8 +52,23 @@ export default TabBarIcon;
 
 const styles = StyleSheet.create({
   tabIcon: {
-    width: 24,
-    height: 24,
+    width: 22 * theme.BW,
+    height: 22 * theme.BW,
     resizeMode: 'contain',
+  },
+  cartQtyContainer: {
+    position: 'absolute',
+    right: 2 * theme.BW,
+    top: -10 * theme.BW,
+    backgroundColor: '#E03A3F',
+    width: 15 * theme.BW,
+    height: 15 * theme.BW,
+    borderRadius: (15 / 2) * theme.BW,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cartQty: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
